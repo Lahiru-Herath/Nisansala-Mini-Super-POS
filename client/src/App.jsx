@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { themeSettings } from "./theme";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./scenes/login";
+import Dashboard from "./scenes/dashboard";
 
 function App() {
 	const theme = useMemo(() => createTheme(themeSettings), []);
@@ -20,10 +21,7 @@ function App() {
 					>
 						<Routes>
 							<Route path="/" element={<Login />} />
-							<Route
-								path="/dashboard"
-								element={<div>Dashbaord Page</div>}
-							/>
+							<Route path="/dashboard" element={<Dashboard />} />
 						</Routes>
 					</Box>
 				</ThemeProvider>
