@@ -5,6 +5,7 @@ import { themeSettings } from "./theme";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./scenes/login";
 import Dashboard from "./scenes/dashboard";
+import ItemRegistry from "./scenes/item-registry";
 
 function App() {
 	const theme = useMemo(() => createTheme(themeSettings), []);
@@ -22,6 +23,10 @@ function App() {
 						<Routes>
 							<Route path="/" element={<Login />} />
 							<Route path="/dashboard" element={<Dashboard />} />
+							<Route
+								path="/item-registry"
+								element={<ItemRegistry />}
+							/>
 						</Routes>
 					</Box>
 				</ThemeProvider>

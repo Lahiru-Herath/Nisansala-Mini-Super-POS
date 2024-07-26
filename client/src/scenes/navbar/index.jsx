@@ -79,7 +79,7 @@ const Navbar = () => {
 						Stock
 					</Link>
 					<Link
-						to="/dashboard"
+						to="/item-registry"
 						onClick={() => setSelected("item-registry")}
 						style={{
 							textDecoration: "inherit",
