@@ -38,6 +38,7 @@ const ItemRegistry = () => {
 	const [itemToEdit, setItemToEdit] = useState(null);
 	const [itemToDelete, setItemToDelete] = useState(null);
 	const [openUpdate, setOpenUpdate] = useState(false);
+	const [updatedItem, setUpdatedItem] = useState(null);
 	const [
 		openUpdateConfirmationDialog,
 		setOpenUpdateConfirmationDialog,
@@ -72,18 +73,32 @@ const ItemRegistry = () => {
 		}
 	};
 
-	const handleUpdateItem = async (updatedItem) => {
+	const handleUpdateItem = (updatedItemDetails) => {
+		console.log("Handling update item: ", updatedItemDetails);
+		setUpdatedItem(updatedItemDetails);
+		setOpenUpdateConfirmationDialog(true);
+	};
+
+	const confirmUpdateItem = async () => {
+		console.log("Confirming update for item", itemToEdit);
+		console.log("Updated item details: ", updatedItem);
 		try {
 			const item = await updateItem(itemToEdit._id, updatedItem);
 			setItems(items.map((i) => (i._id === itemToEdit._id ? item : i)));
+			setOpenUpdateConfirmationDialog(false);
+			setOpenUpdate(false);
+			setItemToEdit(null);
+			setUpdatedItem(null);
 		} catch (err) {
 			console.error(err);
 		}
 	};
 
 	const openUpdateForm = (item) => {
+		console.log(`openUpdateForm: ${item}`);
 		setItemToEdit(item);
 		setOpenUpdate(true);
+		console.log("itemToEdit after settings:", item);
 	};
 
 	const handleDeleteClick = (item) => {
@@ -288,11 +303,23 @@ const ItemRegistry = () => {
 				open={openUpdate}
 				handleClose={() => {
 					setOpenUpdate(false);
-					setItemToEdit(null);
 				}}
 				handleUpdate={handleUpdateItem}
 				itemToEdit={itemToEdit}
 			/>
+
+			{/* UPDATE CONFIRMATION */}
+			<ConfirmationDialog
+				open={openUpdateConfirmationDialog}
+				onClose={() => {
+					setOpenUpdateConfirmationDialog(false);
+				}}
+				onConfirm={confirmUpdateItem}
+				title="Confirm Update"
+				message={`Are you sure you want to update ${itemToEdit?.name}`}
+			/>
+
+			{/* DELETE CONFIRMATION */}
 			<ConfirmationDialog
 				open={openDeleteConfirmationDialog}
 				onClose={() => {

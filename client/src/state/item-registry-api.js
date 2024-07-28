@@ -2,17 +2,18 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const createItem = async ({ name, barcode, desc, bp, sp, category, stock, status }) => {
+export const createItem = async ({ name, barcode, description, buyingPrice, sellingPrice, category, stockQuantity, status }) => {
+    // console.log({ name, barcode, description, buyingPrice, sellingPrice, category, stockQuantity, status });
     try {
         const res = await axios.post(`${API_URL}/products`, {
-            name: name,
-            barcode: barcode,
-            description: desc,
-            buyingPrice: bp,
-            sellingPrice: sp,
+            name,
+            barcode,
+            description,
+            buyingPrice,
+            sellingPrice,
             category,
-            stockQuantity: stock,
-            status
+            stockQuantity,
+            status,
         });
         return res.data;
     } catch (err) {
@@ -20,16 +21,17 @@ export const createItem = async ({ name, barcode, desc, bp, sp, category, stock,
     }
 }
 
-export const updateItem = async (id, { name, barcode, desc, bp, sp, category, stock, status }) => {
+export const updateItem = async (id, { name, barcode, description, buyingPrice, sellingPrice, category, stockQuantity, status }) => {
+    console.log({ name, barcode, description, buyingPrice, sellingPrice, category, stockQuantity, status });
     try {
         const res = await axios.put(`${API_URL}/products/${id}`, {
             name,
             barcode,
-            description: desc,
-            buyingPrice: bp,
-            sellingPrice: sp,
+            description,
+            buyingPrice,
+            sellingPrice,
             category,
-            stockQuantity: stock,
+            stockQuantity,
             status
         });
         return res.data;

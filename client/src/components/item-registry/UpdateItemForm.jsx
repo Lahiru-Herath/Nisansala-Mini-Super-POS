@@ -107,30 +107,30 @@ const UpdateItemForm = ({ open, handleClose, handleUpdate, itemToEdit }) => {
 						value={formValues.category}
 						onChange={handleChange}
 					>
-						<MenuItem value="produce">Produce</MenuItem>
-						<MenuItem value="deli">Deli</MenuItem>
-						<MenuItem value="bakery">Bakery</MenuItem>
-						<MenuItem value="dairy">Dairy</MenuItem>
-						<MenuItem value="frozen foods">Frozen Foods</MenuItem>
-						<MenuItem value="pantry staples">
+						<MenuItem value="Produce">Produce</MenuItem>
+						<MenuItem value="Deli">Deli</MenuItem>
+						<MenuItem value="Bakery">Bakery</MenuItem>
+						<MenuItem value="Dairy">Dairy</MenuItem>
+						<MenuItem value="Frozen Foods">Frozen Foods</MenuItem>
+						<MenuItem value="Pantry Staples">
 							Pantry Staples
 						</MenuItem>
-						<MenuItem value="beverages">Beverages</MenuItem>
-						<MenuItem value="snacks">Snacks</MenuItem>
-						<MenuItem value="breakfast foods">
+						<MenuItem value="Beverages">Beverages</MenuItem>
+						<MenuItem value="Snacks">Snacks</MenuItem>
+						<MenuItem value="Breakfast Foods">
 							Breakfast Foods
 						</MenuItem>
-						<MenuItem value="health and beauty">
+						<MenuItem value="Health and Beauty">
 							Health and Beauty
 						</MenuItem>
-						<MenuItem value="household supplies">
+						<MenuItem value="Household Supplies">
 							Household Supplies
 						</MenuItem>
-						<MenuItem value="baby products">Baby Products</MenuItem>
-						<MenuItem value="pet supplies">Pet Supplies</MenuItem>
-						<MenuItem value="pharmacy">Pharmacy</MenuItem>
-						<MenuItem value="bulk foods">Bulk Foods</MenuItem>
-						<MenuItem value="organic and natural">
+						<MenuItem value="Baby Products">Baby Products</MenuItem>
+						<MenuItem value="Pet Supplies">Pet Supplies</MenuItem>
+						<MenuItem value="Pharmacy">Pharmacy</MenuItem>
+						<MenuItem value="Bulk Foods">Bulk Foods</MenuItem>
+						<MenuItem value="Organic and Natural">
 							Organic and Natural Foods
 						</MenuItem>
 					</Select>

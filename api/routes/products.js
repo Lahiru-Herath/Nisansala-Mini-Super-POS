@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/", createProduct);
 
 // UPDATE
-router.post("/:id", updateProduct);
+router.put("/:id", updateProduct);
 
 // DELETE
 router.delete("/:id", deleteProduct);
