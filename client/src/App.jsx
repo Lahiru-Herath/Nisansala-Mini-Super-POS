@@ -6,6 +6,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./scenes/login";
 import Dashboard from "./scenes/dashboard";
 import ItemRegistry from "./scenes/item-registry";
+import Invoice from "./scenes/invoice";
+import Stock from "./scenes/stock";
 
 function App() {
 	const theme = useMemo(() => createTheme(themeSettings), []);
@@ -27,6 +29,11 @@ function App() {
 								path="/item-registry"
 								element={<ItemRegistry />}
 							/>
+							<Route
+								path="/invoice"
+								element={<div>Invoice</div>}
+							/>
+							<Route path="/stock" element={<Stock />} />
 						</Routes>
 					</Box>
 				</ThemeProvider>
