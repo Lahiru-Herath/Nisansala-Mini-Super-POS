@@ -72,10 +72,10 @@ const Stock = () => {
 								borderColor: palette.grey[300],
 							},
 							"&:hover fieldset": {
-								borderColor: palette.secondary[100],
+								borderColor: palette.primary[100],
 							},
 							"&.Mui-focused fieldset": {
-								borderColor: palette.secondary[100],
+								borderColor: palette.primary[100],
 							},
 							"& input": {
 								height: "2rem",
@@ -84,14 +84,14 @@ const Stock = () => {
 						"& .MuiInputLabel-outlined": {
 							color: palette.grey[300],
 							"&.Mui-focused": {
-								color: palette.secondary[100],
+								color: palette.primary[100],
 							},
 						},
 					}}
 				/>
 				<Button
 					variant="contained"
-					color="secondary"
+					color="primary"
 					startIcon={<KeyboardDoubleArrowDownIcon />}
 					sx={{ height: "2.5rem" }}
 				>
@@ -110,20 +110,20 @@ const Stock = () => {
 				<Table>
 					<TableHead>
 						<TableRow>
-							<TableCell sx={{ color: palette.secondary.main }}>
+							<TableCell sx={{ color: palette.primary.main }}>
 								Item Name
 							</TableCell>
-							<TableCell sx={{ color: palette.secondary.main }}>
+							<TableCell sx={{ color: palette.primary.main }}>
 								Barcode
 							</TableCell>
-							<TableCell sx={{ color: palette.secondary.main }}>
+							<TableCell sx={{ color: palette.primary.main }}>
 								Description
 							</TableCell>
-							<TableCell sx={{ color: palette.secondary.main }}>
+							<TableCell sx={{ color: palette.primary.main }}>
 								Stock Quantity
 							</TableCell>
-							<TableCell sx={{ color: palette.secondary.main }}>
-								Actions
+							<TableCell sx={{ color: palette.primary.main }}>
+								Stock Transactions
 							</TableCell>
 						</TableRow>
 					</TableHead>
@@ -146,7 +146,7 @@ const Stock = () => {
 									<FlexBetween>
 										<Button
 											variant="outlined"
-											color="secondary"
+											color="primary"
 											size="small"
 											sx={{
 												marginRight: 1,

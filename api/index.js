@@ -10,6 +10,7 @@ import inventoryRoute from './routes/inventory.js'
 import ordersRoute from './routes/orders.js'
 import productsRoute from './routes/products.js'
 import usersRoutes from './routes/users.js'
+import supplierRoutes from './routes/suppliers.js'
 
 const app = express();
 const port = 3000;
@@ -36,6 +37,7 @@ app.use("/api/inventory", inventoryRoute);
 app.use("/api/orders", ordersRoute);
 app.use("/api/products", productsRoute);
 app.use("/api/users", usersRoutes);
+app.use("/api/suppliers", supplierRoutes);
 
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;

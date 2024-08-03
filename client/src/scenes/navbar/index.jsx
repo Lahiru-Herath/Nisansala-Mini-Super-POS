@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Box, Typography, useTheme } from "@mui/material";
@@ -8,6 +8,14 @@ import FlexBetween from "@/components/FlexBetween";
 const Navbar = () => {
 	const { palette } = useTheme();
 	const [selected, setSelected] = useState("dashboard");
+	const location = useLocation();
+
+	useEffect(() => {
+		const path = location.pathname.split("/")[1];
+		console.log(path);
+		setSelected(path);
+	}, [location]);
+
 	return (
 		<FlexBetween mb="0.25rem" p="0.5rem 0rem" color={palette.grey[300]}>
 			{/* LEFT SIDE */}
@@ -24,7 +32,6 @@ const Navbar = () => {
 				>
 					<Link
 						to="/dashboard"
-						onClick={() => setSelected("dashboard")}
 						style={{
 							textDecoration: "inherit",
 							marginRight: "1rem",
@@ -37,8 +44,7 @@ const Navbar = () => {
 						Dashboard
 					</Link>
 					<Link
-						to="/dashboard"
-						onClick={() => setSelected("invoice")}
+						to="/invoice"
 						style={{
 							textDecoration: "inherit",
 							marginRight: "1rem",
@@ -52,7 +58,6 @@ const Navbar = () => {
 					</Link>
 					<Link
 						to="/dashboard"
-						onClick={() => setSelected("grn")}
 						style={{
 							textDecoration: "inherit",
 							marginRight: "1rem",
@@ -65,8 +70,7 @@ const Navbar = () => {
 						GRN
 					</Link>
 					<Link
-						to="/dashboard"
-						onClick={() => setSelected("stock")}
+						to="/stock"
 						style={{
 							textDecoration: "inherit",
 							marginRight: "1rem",
@@ -80,7 +84,6 @@ const Navbar = () => {
 					</Link>
 					<Link
 						to="/item-registry"
-						onClick={() => setSelected("item-registry")}
 						style={{
 							textDecoration: "inherit",
 							marginRight: "1rem",

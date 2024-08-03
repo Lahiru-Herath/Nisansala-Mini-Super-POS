@@ -29,10 +29,7 @@ function App() {
 								path="/item-registry"
 								element={<ItemRegistry />}
 							/>
-							<Route
-								path="/invoice"
-								element={<div>Invoice</div>}
-							/>
+							<Route path="/invoice" element={<Invoice />} />
 							<Route path="/stock" element={<Stock />} />
 						</Routes>
 					</Box>
