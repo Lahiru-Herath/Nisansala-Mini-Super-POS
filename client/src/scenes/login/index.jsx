@@ -2,8 +2,7 @@ import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { login } from "../../state/login-api";
+import { login } from "../../state/login-api.js";
 
 const Login = () => {
 	const { palette } = useTheme();

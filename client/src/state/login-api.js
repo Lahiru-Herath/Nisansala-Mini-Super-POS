@@ -7,7 +7,7 @@ export const login = async (username, password) => {
         const res = await axios.post(`${API_URL}/auth/login`, {
             username: username,
             password: password,
-        });
+        }, { withCredentials: true });
         return res.data;
     } catch (err) {
         throw err;

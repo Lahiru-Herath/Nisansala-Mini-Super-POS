@@ -27,7 +27,10 @@ const connect = async () => {
 };
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+    origin: process.env.CLIENT_ORIGIN,
+    credentials: true,
+}));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());

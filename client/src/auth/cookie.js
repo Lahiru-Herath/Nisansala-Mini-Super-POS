@@ -2,8 +2,10 @@ export const getCookie = (name) => {
     const regex = new RegExp(`(^| )${name}=([^;]+)`);
     const match = document.cookie.match(regex);
     if (match) {
+        console.log("getCookie: token found");
         return match[2];
     } else {
-        throw new Error("Token Not Found")
+        console.log("getCookie: unable to find token")
+        return null;
     }
 }
