@@ -15,9 +15,14 @@ import {
 	useTheme,
 	Autocomplete,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import Navbar from "../navbar";
 import FlexBetween from "../../components/FlexBetween";
 import { getItems } from "../../state/item-registry-api";
+import usePreventBackNav from "../../hooks/usePreventBackNav";
 
 const Invoice = () => {
 	const { palette } = useTheme();
@@ -29,6 +34,7 @@ const Invoice = () => {
 	const [totalPrice, setTotalPrice] = useState(0);
 	const [payment, setPayment] = useState(0);
 	const [balance, setBalance] = useState(0);
+	usePreventBackNav();
 
 	useEffect(() => {
 		const fetchItems = async () => {
@@ -73,6 +79,33 @@ const Invoice = () => {
 			setSelectedItem(null);
 			setQuantity(1);
 		}
+	};
+
+	const handleIncreaseQuantity = (itemId) => {
+		console.log(invoiceItems);
+		setInvoiceItems((prevItems) => {
+			prevItems.map((item) => {
+				item._id === itemId && item.quantity < item.stockQuantity
+					? { ...item, quantity: item.quantity + 1 }
+					: item;
+			});
+		});
+	};
+
+	const handleDecreaseQuantity = (itemId) => {
+		setInvoiceItems((prevItems) => {
+			prevItems.map((item) => {
+				item._id === itemId && item.quantity > 1
+					? { ...item, quantity: item.quantity - 1 }
+					: item;
+			});
+		});
+	};
+
+	const handleDeleteItem = (itemId) => {
+		setInvoiceItems((prevItems) => {
+			prevItems.filter((item) => item._id !== itemId);
+		});
 	};
 
 	return (
@@ -312,6 +345,14 @@ const Invoice = () => {
 							<TableCell sx={{ color: palette.primary.main }}>
 								Total Price
 							</TableCell>
+							<TableCell
+								sx={{
+									color: palette.primary.main,
+									textAlign: "center",
+								}}
+							>
+								Actions
+							</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -334,6 +375,56 @@ const Invoice = () => {
 								</TableCell>
 								<TableCell sx={{ color: palette.grey[100] }}>
 									{item.sellingPrice * item.quantity}
+								</TableCell>
+								<TableCell>
+									<FlexBetween
+										width="60%"
+										justifyContent="center"
+									>
+										<Button
+											variant="outlined"
+											color="primary"
+											sx={{
+												height: "2rem",
+												width: "2rem",
+												minWidth: "2rem",
+												padding: 0,
+											}}
+											onClick={handleIncreaseQuantity(
+												item._id
+											)}
+										>
+											<AddIcon />
+										</Button>
+										<Button
+											variant="outlined"
+											color="secondary"
+											sx={{
+												height: "2rem",
+												width: "2rem",
+												minWidth: "2rem",
+												padding: 0,
+											}}
+											onClick={handleDecreaseQuantity(
+												item._id
+											)}
+										>
+											<RemoveIcon />
+										</Button>
+										<Button
+											variant="outlined"
+											color="warning"
+											sx={{
+												height: "2rem",
+												width: "2rem",
+												minWidth: "2rem",
+												padding: 0,
+											}}
+											onClick={handleDeleteItem(item._id)}
+										>
+											<DeleteIcon />
+										</Button>
+									</FlexBetween>
 								</TableCell>
 							</TableRow>
 						))}
@@ -374,18 +465,17 @@ const Invoice = () => {
 						},
 					}}
 				/>
-				<Typography
-					variant="h1"
-					sx={{ color: palette.grey[300], marginTop: "1rem" }}
-				>
-					Balance: {balance}
-				</Typography>
 				<Button
 					variant="contained"
 					color="primary"
-					sx={{ maringTop: "1rem" }}
+					sx={{
+						height: "3.2rem",
+						width: "5rem",
+						margin: "1rem",
+						marginRight: "0rem",
+					}}
 				>
-					Create Order
+					PAY
 				</Button>
 			</Box>
 		</>

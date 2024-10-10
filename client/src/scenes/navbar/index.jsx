@@ -1,20 +1,69 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Box, Typography, useTheme } from "@mui/material";
+import {
+	Box,
+	IconButton,
+	Menu,
+	MenuItem,
+	Typography,
+	useTheme,
+} from "@mui/material";
 import FlexBetween from "@/components/FlexBetween";
+import { getUserByAuthToken } from "../../state/user-api";
+import usePreventBackNav from "../../hooks/usePreventBackNav";
 
 const Navbar = () => {
 	const { palette } = useTheme();
 	const [selected, setSelected] = useState("dashboard");
 	const location = useLocation();
+	const [user, setUser] = useState(null);
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const fetchUser = async () => {
+			try {
+				const newUser = await getUserByAuthToken();
+				setUser(newUser);
+				console.log("useState: user", user.firstName);
+			} catch (err) {
+				console.error("Error fetching user", err);
+			}
+		};
+
+		fetchUser();
+	}, []);
 
 	useEffect(() => {
 		const path = location.pathname.split("/")[1];
 		console.log(path);
 		setSelected(path);
 	}, [location]);
+
+	const handleMenuClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleMenuClose = () => {
+		setAnchorEl(null);
+	};
+
+	const handleViewAccount = () => {
+		handleMenuClose();
+		navigate("/userinfo");
+	};
+
+	const handleLogoutClick = () => {
+		setOpenLogoutDialog(false);
+		navigate("/");
+	};
+
+	const handleLogoutCancel = () => {
+		setOpenLogoutDialog(false);
+	};
 
 	return (
 		<FlexBetween mb="0.25rem" p="0.5rem 0rem" color={palette.grey[300]}>
@@ -110,15 +159,10 @@ const Navbar = () => {
 					</Link>
 				</Typography>
 				<FlexBetween gap="0.5rem">
-					<Link
-						to="/userinfo"
-						onClick={() => setSelected("userinfo")}
-						style={{
-							textDecoration: "inherit",
-							color:
-								selected === "userinfo"
-									? "inherit"
-									: palette.grey[700],
+					<IconButton
+						onClick={handleMenuClick}
+						sx={{
+							color: palette.grey[700],
 						}}
 					>
 						<AccountCircleIcon
@@ -127,21 +171,39 @@ const Navbar = () => {
 								"&:hover": { color: palette.primary[100] },
 							}}
 						/>
-					</Link>
-					<Box>
-						<Typography
-							variant="h5"
-							sx={{ "&:hover": { color: palette.primary[100] } }}
-						>
-							Lahiru Herath
-						</Typography>
-						<Typography
-							variant="h6"
-							sx={{ "&:hover": { color: palette.primary[100] } }}
-						>
-							Admin
-						</Typography>
-					</Box>
+					</IconButton>
+					<Menu
+						anchorEl={anchorEl}
+						open={Boolean(anchorEl)}
+						onClose={handleMenuClose}
+					>
+						<MenuItem onClick={handleViewAccount}>
+							View Account
+						</MenuItem>
+						<MenuItem onClick={handleLogoutClick}>Log out</MenuItem>
+					</Menu>
+					{user ? (
+						<Box>
+							<Typography
+								variant="h5"
+								sx={{
+									"&:hover": { color: palette.primary[100] },
+								}}
+							>
+								{`${user.firstName} ${user.lastName}`}
+							</Typography>
+							<Typography
+								variant="h6"
+								sx={{
+									"&:hover": { color: palette.primary[100] },
+								}}
+							>
+								{user.isAdmin ? "Admin" : "User"}
+							</Typography>
+						</Box>
+					) : (
+						<Typography variant="h6">Loading...</Typography>
+					)}
 				</FlexBetween>
 			</FlexBetween>
 		</FlexBetween>

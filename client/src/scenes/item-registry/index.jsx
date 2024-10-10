@@ -29,6 +29,7 @@ import {
 import AddItemForm from "../../components/item-registry/AddItemForm";
 import UpdateItemForm from "../../components/item-registry/UpdateItemForm";
 import ConfirmationDialog from "../../components/ConfirmationDialog";
+import usePreventBackNav from "../../hooks/usePreventBackNav";
 
 const ItemRegistry = () => {
 	const { palette } = useTheme();
@@ -47,6 +48,7 @@ const ItemRegistry = () => {
 		openDeleteConfirmationDialog,
 		setOpenDeleteConfirmationDialog,
 	] = useState(false);
+	usePreventBackNav();
 
 	useEffect(() => {
 		const fetchItems = async () => {

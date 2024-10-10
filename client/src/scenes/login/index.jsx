@@ -3,8 +3,10 @@ import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../state/login-api.js";
+import usePreventBackNav from "../../hooks/usePreventBackNav.js";
 
 const Login = () => {
+	usePreventBackNav();
 	const { palette } = useTheme();
 	const navigate = useNavigate();
 

@@ -6,8 +6,11 @@ import Row1 from "./Row1";
 import Row2 from "./Row2";
 import Row3 from "./Row3";
 import Row4 from "./Row4";
+import usePreventBackNav from "../../hooks/usePreventBackNav";
 
 const Dashboard = () => {
+	usePreventBackNav();
+
 	const gridTemplate = `
         "a a a a"
         "b b c d"

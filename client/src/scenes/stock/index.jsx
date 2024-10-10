@@ -19,8 +19,10 @@ import Navbar from "../navbar";
 import FlexBetween from "../../components/FlexBetween";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import ListIcon from "@mui/icons-material/List";
+import usePreventBackNav from "../../hooks/usePreventBackNav";
 
 const Stock = () => {
+	usePreventBackNav();
 	const { palette } = useTheme();
 	const [items, setItems] = useState([]);
 	const [searchQuery, setSearchQuery] = useState("");
