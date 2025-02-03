@@ -33,3 +33,16 @@ export const getUserByAuthToken = async () => {
     }
 }
 
+export const getUserByToken = async () => {
+    try {
+        const token = localStorage.getItem("user_token");
+        const decodedToken = jwtDecode(token);
+        console.log("Decoded token: ", decodedToken);
+        console.log("userId: ", decodedToken.id);
+        const user = await getUser(decodedToken.id);
+        return user;
+    } catch (err) {
+        console.log(err);
+    }
+}
+

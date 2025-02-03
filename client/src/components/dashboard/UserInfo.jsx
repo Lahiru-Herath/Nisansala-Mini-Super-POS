@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EditIcon from "@mui/icons-material/Edit";
@@ -6,16 +6,38 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PeopleIcon from "@mui/icons-material/People";
 import { Box, Divider, Typography, useTheme, Button } from "@mui/material";
 import FlexBetween from "../FlexBetween";
+import { getUserByToken } from "../../state/user-api";
 
 const UserInfo = () => {
 	const { palette } = useTheme();
+	const [userInfo, setUserInfo] = useState(null);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		const fetchUser = async () => {
+			try {
+				const user = await getUserByToken();
+				setUserInfo(user);
+			} catch (err) {
+				console.log(err);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchUser();
+	}, []);
+
+	if (loading) {
+		return <p>Loading...</p>;
+	}
 
 	const user = {
-		firstName: "Lahiru",
-		lastName: "Herath",
-		username: "Lahiru_Herath",
-		email: "hmlahirubh123@gmail.com",
-		isAdmin: true,
+		firstName: userInfo.firstName,
+		lastName: userInfo.lastName,
+		username: userInfo.username,
+		email: userInfo.email,
+		isAdmin: userInfo.isAdmin,
 	};
 
 	return (

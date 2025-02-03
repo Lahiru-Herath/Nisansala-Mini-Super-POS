@@ -13,6 +13,7 @@ import {
 import FlexBetween from "@/components/FlexBetween";
 import { getUserByAuthToken } from "../../state/user-api";
 import usePreventBackNav from "../../hooks/usePreventBackNav";
+import { removeCookie } from "../../auth/cookie";
 
 const Navbar = () => {
 	const { palette } = useTheme();
@@ -28,7 +29,7 @@ const Navbar = () => {
 			try {
 				const newUser = await getUserByAuthToken();
 				setUser(newUser);
-				console.log("useState: user", user.firstName);
+				// console.log("useState: user", user.firstName);
 			} catch (err) {
 				console.error("Error fetching user", err);
 			}
@@ -58,6 +59,8 @@ const Navbar = () => {
 
 	const handleLogoutClick = () => {
 		setOpenLogoutDialog(false);
+		localStorage.removeItem("user_token");
+		removeCookie("access_token");
 		navigate("/");
 	};
 

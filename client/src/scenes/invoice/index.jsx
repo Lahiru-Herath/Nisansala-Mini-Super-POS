@@ -23,6 +23,8 @@ import Navbar from "../navbar";
 import FlexBetween from "../../components/FlexBetween";
 import { getItems } from "../../state/item-registry-api";
 import usePreventBackNav from "../../hooks/usePreventBackNav";
+import { decodeToken } from "../../auth/cookie";
+import { createOrder } from "../../state/invoice-api";
 
 const Invoice = () => {
 	const { palette } = useTheme();
@@ -82,30 +84,57 @@ const Invoice = () => {
 	};
 
 	const handleIncreaseQuantity = (itemId) => {
-		console.log(invoiceItems);
-		setInvoiceItems((prevItems) => {
-			prevItems.map((item) => {
+		setInvoiceItems((prevItems) =>
+			prevItems.map((item) =>
 				item._id === itemId && item.quantity < item.stockQuantity
 					? { ...item, quantity: item.quantity + 1 }
-					: item;
-			});
-		});
+					: item
+			)
+		);
 	};
 
 	const handleDecreaseQuantity = (itemId) => {
-		setInvoiceItems((prevItems) => {
-			prevItems.map((item) => {
+		setInvoiceItems((prevItems) =>
+			prevItems.map((item) =>
 				item._id === itemId && item.quantity > 1
 					? { ...item, quantity: item.quantity - 1 }
-					: item;
-			});
-		});
+					: item
+			)
+		);
 	};
 
 	const handleDeleteItem = (itemId) => {
-		setInvoiceItems((prevItems) => {
-			prevItems.filter((item) => item._id !== itemId);
-		});
+		setInvoiceItems((prevItems) =>
+			prevItems.filter((item) => item._id !== itemId)
+		);
+	};
+
+	const handlePayment = async () => {
+		const user_token = localStorage.getItem("user_token");
+		const token_info = decodeToken(user_token);
+		// console.log(token_info.id);
+		const orderData = {
+			userId: token_info.id,
+			totalAmount: totalPrice,
+			paymentMethod: "cash",
+			items: invoiceItems.map((item) => ({
+				productId: item._id,
+				quantity: item.quantity,
+				price: item.sellingPrice,
+			})),
+		};
+
+		try {
+			const savedOrder = await createOrder(orderData);
+			console.log("Order created successfully: ", savedOrder);
+
+			setInvoiceItems([]);
+			setTotalPrice(0);
+			setPayment(0);
+			setBalance(0);
+		} catch (err) {
+			console.error("Error creating order: ", err);
+		}
 	};
 
 	return (
@@ -390,9 +419,9 @@ const Invoice = () => {
 												minWidth: "2rem",
 												padding: 0,
 											}}
-											onClick={handleIncreaseQuantity(
-												item._id
-											)}
+											onClick={() =>
+												handleIncreaseQuantity(item._id)
+											}
 										>
 											<AddIcon />
 										</Button>
@@ -405,9 +434,9 @@ const Invoice = () => {
 												minWidth: "2rem",
 												padding: 0,
 											}}
-											onClick={handleDecreaseQuantity(
-												item._id
-											)}
+											onClick={() =>
+												handleDecreaseQuantity(item._id)
+											}
 										>
 											<RemoveIcon />
 										</Button>
@@ -420,7 +449,9 @@ const Invoice = () => {
 												minWidth: "2rem",
 												padding: 0,
 											}}
-											onClick={handleDeleteItem(item._id)}
+											onClick={() =>
+												handleDeleteItem(item._id)
+											}
 										>
 											<DeleteIcon />
 										</Button>
@@ -474,6 +505,7 @@ const Invoice = () => {
 						margin: "1rem",
 						marginRight: "0rem",
 					}}
+					onClick={handlePayment}
 				>
 					PAY
 				</Button>
